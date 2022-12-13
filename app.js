@@ -67,66 +67,32 @@ const products = [
 
 
 
+
+
 const contenedor = document.querySelector('#product-list-container');
 
+createDiv();
 
 
-let div = document.createElement('div');
-div.innerHTML = `<label>${createDiv()}</label> - <input type="text">`;
-contenedor.appendChild(div);
-
-var stored = '';
-
-function createDiv() {
+function createDiv(){
     for (i = 0; i <= (products.length - 1); i++) {
-        stored += products[i].description + '\n';
-        return stored;
+        let div = document.createElement('div');
+        div.innerHTML = `<label>${ products[i].description }</label> - `; //Añadir el label al div de cada producto JS
+        div.append(createInput(i)); //Añadir el input al div de cada producto JS
+        div.append(`€`);
+        contenedor.appendChild(div); //Añadir al div del HTML
     }
 }
 
+function createInput(index){
+    var input = document.createElement("input"); //Crear input, no visible
+    input.setAttribute("class", "product-unit");//CSS? clase y nombre de clase
+    input.setAttribute("type", "number"); //tipo
+    input.setAttribute("value", 0); //valor
+    input.setAttribute("id", i); //id
+    input.setAttribute("max", products[index].stock); //max
+    input.setAttribute("min", 0); //min
+    input.addEventListener("change", event => console.log(event.target.value)); //funcion que muestra el valor del input al cambiarlo
+    return input;   
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*var input = document.createElement("input"); //Crear input, no visible
-input.setAttribute("class", "product-unit");//CSS? clase y nombre de clase
-input.setAttribute("type", "number"); //tipo
-input.setAttribute("value", 0); //valor
-input.addEventListener("change", event => console.log(event.target.value)); //funcion que muestra el valor del input al cambiarlo
-
-var div = document.getElementById("product-list-container");
-
-var span = document.createElement("span");
-*/
-
-
-
-
-/*span.innerText = stored;
-
-div.appendChild(span);
-
-
-div.appendChild(input);*/
