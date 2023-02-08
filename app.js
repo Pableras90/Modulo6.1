@@ -67,9 +67,6 @@ const products = [
 
 const contenedor = document.querySelector('#product-list-container');
 
-createDiv();
-
-
 function createDiv() {
     for (i = 0; i <= (products.length - 1); i++) {
         let div = document.createElement('div');
@@ -79,6 +76,8 @@ function createDiv() {
         contenedor.appendChild(div); //Añadir al div del HTML
     }
 }
+
+createDiv();
 
 function createInput(index) {
     var input = document.createElement("input"); //Crear input, no visible
@@ -93,52 +92,34 @@ function createInput(index) {
 }
 
 
-
-
 function calculoSubtotal() {
+    var subtotal = 0;
     for (i = 0; i <= products.length - 1; i++) {
         products[i].subtotal = products[i].units * products[i].price;
+        subtotal += products[i].subtotal;
     }
+    return subtotal;
 }
-
-
 
 
 function calculoIva() {
-
+    var iva = 0;
     for (i = 0; i <= products.length - 1; i++) {
         products[i].iva = (products[i].price * (products[i].tax / 100)) * products[i].units;
+        iva += products[i].iva;
     }
+    return iva;
 }
-
-
-
 
 
 function calculoTotal() {
-    for (i = 0; i <= products.length - 1; i++) {
-        products[i].total = products[i].iva + products[i].subtotal;
-        console.log(products[i].total)
-    }
-
+    return calculoIva() + calculoSubtotal();
 }
 
 function botonCalcular() {
-    calculoSubtotal();
-    calculoIva();
-    calculoTotal();
-    var subtotal = 0;
-    var iva = 0;
-    var total = 0;
-    for (i = 0; i <= products.length - 1; i++) {
-        subtotal += products[i].subtotal;
-        iva += products[i].iva;
-        total += products[i].total;
-    }
-    document.getElementById("Subtotal").innerText = "Subtotal: " + subtotal;
-    document.getElementById("IVA").innerText ="IVA: " + iva;
-    document.getElementById("Total").innerText ="Total: "  +total;
+    document.getElementById("Subtotal").innerText = "Subtotal: " + calculoSubtotal();
+    document.getElementById("IVA").innerText = "IVA: " + calculoIva();
+    document.getElementById("Total").innerText = "Total: " + calculoTotal();
 }
-
 
 document.getElementById("button").addEventListener("click", () => botonCalcular());
