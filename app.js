@@ -79,15 +79,27 @@ function createDiv() {
 
 createDiv();
 
+function mostrarBoton(products) {
+    if (products.find(p => p.units > 0)) {
+        document.getElementById("button").disabled = false;
+    }
+    else {
+        document.getElementById("button").disabled = true;
+    }
+}
+
+
 function createInput(index) {
     var input = document.createElement("input"); //Crear input, no visible
     input.setAttribute("class", "product-unit");//CSS? clase y nombre de clase
     input.setAttribute("type", "number"); //tipo
     input.setAttribute("value", 0); //valor
-    input.setAttribute("id", i); //id
+    input.setAttribute("id", index); //id
     input.setAttribute("max", products[index].stock); //max
     input.setAttribute("min", 0); //min
-    input.addEventListener("change", event => products[index].units = event.target.value); //funcion que muestra el valor del input al cambiarlo
+    input.addEventListener("change", event => products[index].units = event.target.value);
+    input.addEventListener("change", () => mostrarBoton(products)); //funcion que muestra el valor del input al cambiarlo
+
     return input;
 }
 
@@ -121,5 +133,6 @@ function botonCalcular() {
     document.getElementById("IVA").innerText = "IVA: " + calculoIva();
     document.getElementById("Total").innerText = "Total: " + calculoTotal();
 }
+
 
 document.getElementById("button").addEventListener("click", () => botonCalcular());
